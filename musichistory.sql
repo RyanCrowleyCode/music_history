@@ -27,16 +27,52 @@ VALUES ("Belief", 242, "09/12/2006", 2, 28, 24);
 SELECT * FROM Song;
 
 -- Write a SELECT query that provides the song titles, album title, and artist name for all of the data you just entered in. Use the LEFT JOIN keyword sequence to connect the tables, and the WHERE keyword to filter the results to the album and artist you added.
+SELECT s.Title as 'Song', al.Title as 'Album', ar.ArtistName as 'Artist'
+FROM Song s
+LEFT JOIN Album al, Artist ar
+ON s.ArtistId = al.ArtistId
+AND s.ArtistId = ar.ArtistId
+WHERE s.ArtistId = 28;
 
 -- Reminder: Direction of join matters. Try the following statements and see the difference in results.
 
--- SELECT a.Title, s.Title FROM Album a LEFT JOIN Song s ON s.AlbumId = a.AlbumId;
--- SELECT a.Title, s.Title FROM Song s LEFT JOIN Album a ON s.AlbumId = a.AlbumId;
+SELECT a.Title as Album, s.Title as Song
+FROM Album a 
+LEFT JOIN Song s 
+ON s.AlbumId = a.AlbumId;
+
+SELECT s.Title as Song, a.Title as Album
+FROM Song s 
+LEFT JOIN Album a 
+ON s.AlbumId = a.AlbumId;
+
+
 -- Write a SELECT statement to display how many songs exist for each album. You'll need to use the COUNT() function and the GROUP BY keyword sequence.
+
+SELECT count() as 'Song Count', a.Title
+FROM Song s
+JOIN Album a
+ON s.AlbumId = a.AlbumId
+GROUP BY a.AlbumId
+ORDER BY count() DESC;
+
 
 -- Write a SELECT statement to display how many songs exist for each artist. You'll need to use the COUNT() function and the GROUP BY keyword sequence.
 
+SELECT count() as 'Song Count', ar.ArtistName
+FROM Song s
+JOIN Artist ar
+ON s.ArtistId = ar.ArtistId
+GROUP BY ar.ArtistId;
+
 -- Write a SELECT statement to display how many songs exist for each genre. You'll need to use the COUNT() function and the GROUP BY keyword sequence.
+
+SELECT count() as 'Song Count', g.Label
+FROM Song s
+JOIN Genre g
+ON s.GenreId = g.GenreId
+GROUP BY g.GenreId
+ORDER BY count();
 
 -- Using MAX() function, write a select statement to find the album with the longest duration. The result should display the album title and the duration.
 
